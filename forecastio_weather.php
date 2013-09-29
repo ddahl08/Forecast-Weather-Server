@@ -18,9 +18,9 @@ function epoch_to_string_time($epoch,$timezone, $hour_only = false){
 
 $mc = new Memcached();
 $mc->addServer("127.0.0.1", 11211);
- 
 
-define('API_KEY', '3473b8c74dd6c98a35996f49ba7abede');
+include 'api_key.php';
+
 $payload = json_decode(file_get_contents('php://input'), true);
 if(!$payload){
    print "no payload";
