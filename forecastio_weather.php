@@ -19,6 +19,12 @@ function epoch_to_string_time($epoch,$timezone, $hour_only = false){
 
 include "api_key.php";
 
+$payload = json_decode(file_get_contents('php://input'), true);
+if(!$payload){
+   print "<p>You will need your own server for this watchface.  If you would be interested helping fund the cost of the forecast.io API, email me:  natejbean at gmail.com";
+   die();
+ }
+
 $pebble_id = $_SERVER['HTTP_X_PEBBLE_ID'];
 if ($pebble_id != "00:17:EC:34:7C:CC"){ //my pebble
   for ($i = 1; $i <= 15; $i++){
@@ -38,11 +44,6 @@ if ($pebble_id != "00:17:EC:34:7C:CC"){ //my pebble
   $mc = new Memcached();
   $mc->addServer("127.0.0.1", 11211);
 
-  $payload = json_decode(file_get_contents('php://input'), true);
-  if(!$payload){
-     print "no payload";
-     die();
-   }
   $payload[1] /= 10000;
   $payload[2] /= 10000;
 
