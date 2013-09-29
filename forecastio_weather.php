@@ -21,14 +21,22 @@ include "api_key.php";
 
 $payload = json_decode(file_get_contents('php://input'), true);
 if(!$payload){
-   print "<p>You will need your own server for this watchface.  If you would be interested helping fund the cost of the forecast.io API, email me:  natejbean at gmail.com";
+   print "<p>You will need your own server for this watchface.  If you would be interested in helping fund the cost of the forecast.io API, email me:  natejbean at gmail.com";
    die();
  }
 
 $pebble_id = $_SERVER['HTTP_X_PEBBLE_ID'];
 if ($pebble_id != "00:17:EC:34:7C:CC"){ //my pebble
   for ($i = 1; $i <= 15; $i++){
-    $response[$i] = "99";
+    $new_ans = "99";
+    if ($i == 5 || $i == 14)
+    {
+      $new_ans = "need";
+     }elseif($i ==6 or $i ==15) {
+      $new_ans = "api";
+
+     }
+    $response[$i] = $new_ans;
   }
 
   $response_string = "";
