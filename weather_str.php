@@ -1,11 +1,19 @@
 <?php
-function epoch_to_string_time($epoch,$timezone){
+function epoch_to_string_time($epoch,$timezone, $hour_only = false){
   $dt = new DateTime("@$epoch");  // convert UNIX timestamp to PHP DateTime
   $TimeStr = $dt->format('Y-m-d H:i:s'); // output = 2012-08-15 00:00:00 
   $TimeZoneNameFrom="UTC";
-  $ret = date_create($TimeStr, new DateTimeZone($TimeZoneNameFrom))
-            ->setTimezone(new DateTimeZone($timezone))->format("H:i");
-  return $ret;
+  if ($hour_only){
+    $ret = date_create($TimeStr, new DateTimeZone($TimeZoneNameFrom))
+                ->setTimezone(new DateTimeZone($timezone))->format("ga");
+    return $ret;
+
+  }else{
+    $ret = date_create($TimeStr, new DateTimeZone($TimeZoneNameFrom))
+                ->setTimezone(new DateTimeZone($timezone))->format("H:i");
+    return $ret;
+
+  }
 }
 
 define('API_KEY', '3473b8c74dd6c98a35996f49ba7abede');
@@ -38,9 +46,9 @@ $icons = array(
 $icon_id = $icons[$forecast->currently->icon];
 $temp = round($forecast->currently->temperature);
 $temp_low = round($forecast->daily->data[0]->temperatureMin);
-$today_low_time = epoch_to_string_time($forecast->daily->data[0]->temperatureMinTime, $forecast->timezone);
+$today_low_time = epoch_to_string_time($forecast->daily->data[0]->temperatureMinTime, $forecast->timezone, true);
 $temp_high = round($forecast->daily->data[0]->temperatureMax);
-$today_high_time = epoch_to_string_time($forecast->daily->data[0]->temperatureMaxTime, $forecast->timezone);
+$today_high_time = epoch_to_string_time($forecast->daily->data[0]->temperatureMaxTime, $forecast->timezone, true);
 $today_icon_id = $icons[$forecast->daily->data[0]->icon];
 $raw_sunrise_time = $forecast->daily->data[0]->sunriseTime;
 $sunrise = epoch_to_string_time($raw_sunrise_time,$forecast->timezone);
