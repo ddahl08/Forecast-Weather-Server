@@ -8,6 +8,10 @@ function epoch_to_string_time($epoch,$timezone){
   return $ret;
 }
 
+//disabled
+print("no longer used, thanks.");
+die();
+
 define('API_KEY', '3473b8c74dd6c98a35996f49ba7abede');
 $payload = json_decode(file_get_contents('php://input'), true);
 if(!$payload){
