@@ -18,6 +18,8 @@ function epoch_to_string_time($epoch,$timezone, $hour_only = false){
 
 
 include "api_key.php";
+//put this in api_key.php or just put it here
+//define('API_KEY', 'your key');
 
 $payload = json_decode(file_get_contents('php://input'), true);
 if(!$payload){
@@ -26,7 +28,7 @@ if(!$payload){
  }
 
 $pebble_id = $_SERVER['HTTP_X_PEBBLE_ID'];
-if ($pebble_id != "00:17:EC:34:7C:CC"){ //my pebble
+if ($pebble_id != MY_PEBBLE){ //my pebble
   for ($i = 1; $i <= 15; $i++){
     $new_ans = "99";
     if ($i == 5 || $i == 14)
